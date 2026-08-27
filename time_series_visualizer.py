@@ -13,6 +13,7 @@ df = pd.read_csv(
     parse_dates=True
 )
 
+
 # Clean data
 df = df[
     (df["value"] >= df["value"].quantile(0.025)) &
@@ -40,6 +41,7 @@ def draw_line_plot():
 
 # Draw bar plot
 def draw_bar_plot():
+    # IMPORTANT: copy the original df
     df_bar = df.copy()
 
     df_bar["year"] = df_bar.index.year
@@ -81,6 +83,7 @@ def draw_bar_plot():
 
 # Draw box plot
 def draw_box_plot():
+    # IMPORTANT: copy the original df
     df_box = df.copy()
 
     df_box["year"] = df_box.index.year
@@ -95,9 +98,11 @@ def draw_box_plot():
         dict(enumerate(month_order, 1))
     )
 
-    fig, axes = plt.subplots(1, 2, figsize=(15, 6))
+    fig, axes = plt.subplots(
+        1, 2,
+        figsize=(15, 6)
+    )
 
-    # Year-wise box plot
     sns.boxplot(
         x="year",
         y="value",
@@ -109,7 +114,6 @@ def draw_box_plot():
     axes[0].set_xlabel("Year")
     axes[0].set_ylabel("Page Views")
 
-    # Month-wise box plot
     sns.boxplot(
         x="month_name",
         y="value",
